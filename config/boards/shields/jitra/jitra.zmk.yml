@@ -1,0 +1,8 @@
+file_format: "1"
+id: jitra
+name: JITRA
+type: shield
+url: https://github.com/fuku813-ui/zmk-config-JITRA
+requires: [seeeduino_xiao_ble]
+features:
+  - keys

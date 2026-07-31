@@ -1,0 +1,4 @@
+name: jitra
+build:
+  settings:
+    board_root: .

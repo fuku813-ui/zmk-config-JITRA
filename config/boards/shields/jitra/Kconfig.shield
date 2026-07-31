@@ -1,0 +1,5 @@
+config SHIELD_JITRA_R
+    def_bool $(shields_list_contains,jitra_R)
+
+config SHIELD_JITRA_L
+    def_bool $(shields_list_contains,jitra_L)
