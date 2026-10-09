@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JITRA 取扱説明書</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #2b2b2b;
+    --muted: #6b6b6b;
+    --accent: #c0693a;
+    --accent-soft: #f3e3da;
+    --line: #e7e1d8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a18;
+      --card: #262320;
+      --text: #ece7e1;
+      --muted: #aba39a;
+      --accent: #e08a5f;
+      --accent-soft: #3a2c23;
+      --line: #3a342d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    line-height: 1.75;
+    padding-bottom: 60px;
+  }
+  header {
+    padding: 36px 20px 28px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  header .logo {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  header h1 {
+    margin: 8px 0 4px;
+    font-size: 28px;
+  }
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  nav.toc {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    margin: 20px 0;
+    padding: 16px 20px;
+  }
+  nav.toc p {
+    margin: 0 0 8px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  nav.toc ol {
+    margin: 0;
+    padding-left: 20px;
+    columns: 1;
+  }
+  nav.toc a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  nav.toc li { margin-bottom: 6px; }
+
+  section {
+    margin: 32px 0;
+    scroll-margin-top: 16px;
+  }
+  section h2 {
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  section h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  .warn {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin: 14px 0;
+  }
+  .warn strong { color: var(--accent); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    background: var(--accent-soft);
+    font-weight: 600;
+    width: 32%;
+  }
+  tr:last-child td, tr:last-child th { border-bottom: none; }
+  ul.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul.steps li {
+    position: relative;
+    padding: 4px 0 16px 34px;
+    border-left: 2px solid var(--line);
+    margin-left: 13px;
+  }
+  ul.steps li:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+  ul.steps li::before {
+    content: attr(data-step);
+    position: absolute;
+    left: -14px;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-slot {
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 10px 0 16px;
+    background: var(--accent-soft);
+  }
+  code {
+    background: var(--accent-soft);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+  a { color: var(--accent); }
+  footer {
+    max-width: 640px;
+    margin: 40px auto 0;
+    padding: 20px 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">JITRA</div>
+  <h1>取扱説明書</h1>
+  <p>トラックボール付き 60% 日本語配列 無線左右分割キーボード</p>
+</header>
+
+<main>
+
+  <nav class="toc">
+    <p>目次</p>
+    <ol>
+      <li><a href="#inbox">箱の中身・別途用意するもの</a></li>
+      <li><a href="#assemble">組み立て(スイッチ・キーキャップ・トラックボール・電池)</a></li>
+      <li><a href="#pairing">電源の入れ方とペアリング</a></li>
+      <li><a href="#keymap">キーマップの基本</a></li>
+      <li><a href="#layers">レイヤー(機能切り替え)</a></li>
+      <li><a href="#trackball">トラックボール・エンコーダー</a></li>
+      <li><a href="#firmware">ファームウェアについて(上級者向け)</a></li>
+      <li><a href="#trouble">困ったときは</a></li>
+      <li><a href="#support">サポート・保証</a></li>
+    </ol>
+  </nav>
+
+  <section id="inbox">
+    <h2><span class="num">1</span>箱の中身・別途用意するもの</h2>
+    <div class="card">
+      <p><strong>JITRA本体は組み立て済み</strong>でお届けします。出荷前にキー入力・トラックボール・エンコーダー・左右間の無線通信は確認済みです。ただし、以下のものは<strong>同梱されていません</strong>。ご自身でご用意ください。</p>
+      <table>
+        <tr><th>単4電池</th><td>2本(左右それぞれ1本ずつ)</td></tr>
+        <tr><th>キースイッチ</th><td>Choc V2 ロープロファイル対応品 65個</td></tr>
+        <tr><th>キーキャップ</th><td>Choc V2対応、1U×53 / 1.25U×6 / 1.5U×1 / 1.75U×2 / 2.25U×1 / ISO Enter×1</td></tr>
+        <tr><th>トラックボール球</th><td>25mm 1個</td></tr>
+        <tr><th>USBケーブル</th><td>Type-C(主に充電ではなくファームウェア更新時に使用)</td></tr>
+      </table>
+      <div class="warn"><strong>注意:</strong> リチウムポリマー電池は使用していません。単4電池(アルカリ/充電式いずれも可)を使用してください。種類の異なる電池や新旧の電池を混ぜて使用しないでください。</div>
+    </div>
+  </section>
+
+  <section id="assemble">
+    <h2><span class="num">2</span>組み立て</h2>
+    <div class="card">
+      <ul class="steps">
+        <li data-step="1">
+          <strong>キースイッチを取り付ける</strong><br>
+          本体はホットスワップソケット対応です。スイッチの向き(ピンの向き)を確認し、ソケットにまっすぐ押し込んでください。斜めに挿すとピンが曲がる原因になります。
+          <div class="photo-slot">(ここにホットスワップソケットの写真を挿入)</div>
+        </li>
+        <li data-step="2">
+          <strong>キーキャップを取り付ける</strong><br>
+          表の一覧を参考に、サイズの異なるキー(Enter・Shiftなど)の位置を間違えないよう取り付けてください。
+        </li>
+        <li data-step="3">
+          <strong>トラックボール球を入れる</strong><br>
+          右手側(トラックボール搭載側)のソケットに25mm球を乗せてください。落下防止のため、使用中以外は本体を立てたり逆さにしたりしないことをおすすめします。
+          <div class="photo-slot">(ここにトラックボールソケットの写真を挿入)</div>
+        </li>
+        <li data-step="4">
+          <strong>電池を入れる</strong><br>
+          左右それぞれの電池ボックスに単4電池を1本ずつ、極性(+/-)を確認して入れてください。
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="pairing">
+    <h2><span class="num">3</span>電源の入れ方とペアリング</h2>
+    <div class="card">
+      <ul class="steps">
+        <li data-step="1">左右両方の電源を入れます。</li>
+        <li data-step="2">右手側(トラックボール搭載側)がPC/スマートフォンとBluetooth接続される「親機」です。PC側のBluetooth設定から「JITRA」のような名前のデバイスを探して接続してください。</li>
+        <li data-step="3">左右間は自動的に無線接続されます。しばらく経っても左手側の入力が反映されない場合は、一度両方の電源を入れ直してください。</li>
+      </ul>
+      <div class="warn">複数台のPCを切り替えて使いたい場合は、本書「<a href="#layers">レイヤー</a>」の章にあるBluetoothプロファイル切り替えをご利用ください(最大5台まで登録できます)。</div>
+    </div>
+  </section>
+
+  <section id="keymap">
+    <h2><span class="num">4</span>キーマップの基本</h2>
+    <div class="card">
+      <p>基本的な配列は、<strong>Macの日本語(JIS)キーボードにほぼそのまま準拠</strong>しています。「かな」「英数」キーも同じ位置にあります。Macにお使いの場合は特別な設定をしなくても違和感なく入力できるはずです。</p>
+      <p>キーボード本体の下段(親指で押す部分)だけは、方向キーを省略した分レイアウトが異なります。</p>
+      <table>
+        <tr><th>段</th><th>内容</th></tr>
+        <tr><td>数字の段</td><td>半角/全角 ・ 1〜0 ・ - ・ ^ ・ ¥ ・ 削除(Backspace)</td></tr>
+        <tr><td>上段</td><td>Tab ・ QWERTYUIOP ・ @ ・ [ ・ Enter</td></tr>
+        <tr><td>中段</td><td>Caps Lock ・ ASDFGHJKL ・ ; ・ : ・ 前方削除(Delete)</td></tr>
+        <tr><td>下段</td><td>Shift ・ ZXCVBNM ・ , ・ . ・ / ・ ろ ・ Shift</td></tr>
+        <tr><td>最下段(親指)</td><td>Ctrl ・ ⌘ ・ ⌥ ・ 英数 ・ Space ・ かな ・ ⌘ ・ ⌥ ・ Ctrl</td></tr>
+      </table>
+      <div class="warn">中段右端のキーは、一般的なMac JISキーボードには存在しない「前方削除(Delete / Macのfn+deleteに相当)」キーです。文字を後ろから消したいときに便利です。</div>
+    </div>
+  </section>
+
+  <section id="layers">
+    <h2><span class="num">5</span>レイヤー(機能切り替え)</h2>
+    <div class="card">
+      <p>「英数」キーと「かな」キーは、<strong>長押しすると別の機能に切り替わる</strong>特別なキーも兼ねています。</p>
+      <table>
+        <tr><th>操作</th><th>切り替わる内容</th></tr>
+        <tr>
+          <td>「英数」を押しながら他のキー</td>
+          <td>F1〜F12・方向キー・Home/End/PageUp/PageDown・画面の明るさ・音量</td>
+        </tr>
+        <tr>
+          <td>「かな」を押しながら他のキー</td>
+          <td>Bluetoothの接続先切り替え(5台まで)・ペアリング情報のクリア</td>
+        </tr>
+      </table>
+      <p style="margin-top:14px;">例: 「英数」を押しながら数字の段の7のキー(F7の位置)を押すとF7キーとして動作します。</p>
+    </div>
+  </section>
+
+  <section id="trackball">
+    <h2><span class="num">6</span>トラックボール・エンコーダー</h2>
+    <div class="card">
+      <p><strong>トラックボール(右手側)</strong>を転がすと、自動的にマウスカーソル操作に切り替わります(操作をやめるとキー入力モードに自動で戻ります)。</p>
+      <p>中段のH・J・Kの位置にあるキーは、トラックボール使用中はそれぞれ<strong>左クリック・中クリック・右クリック</strong>として使えます。</p>
+      <p><strong>ロータリーエンコーダー(左手側)</strong>を回すと上下にスクロールします。</p>
+    </div>
+  </section>
+
+  <section id="firmware">
+    <h2><span class="num">7</span>ファームウェアについて(上級者向け)</h2>
+    <div class="card">
+      <p>本製品はオープンソースファームウェア「ZMK」で動作しています。キー配列は以下のGitHubリポジトリで公開されており、ご自身でカスタマイズして書き込むこともできます(自己責任でお願いいたします)。</p>
+      <p><a href="https://github.com/fuku813-ui/zmk-config-JITRA" target="_blank" rel="noopener">github.com/fuku813-ui/zmk-config-JITRA</a></p>
+      <p>GitHub上で自動的にビルドされたファイル(.uf2)を、USBケーブル接続時にリセットボタンを素早く2回押して書き込みモードにしたうえで、表示されるドライブにドラッグ&ドロップすることで書き込めます。</p>
+    </div>
+  </section>
+
+  <section id="trouble">
+    <h2><span class="num">8</span>困ったときは</h2>
+    <div class="card">
+      <table>
+        <tr><th>症状</th><th>確認してほしいこと</th></tr>
+        <tr><td>反応しない</td><td>電池の向き・残量を確認してください</td></tr>
+        <tr><td>片側だけ反応しない</td><td>その側の電池を確認し、両方の電源を入れ直してください</td></tr>
+        <tr><td>Bluetoothが繋がらない</td><td>PC側で一度ペアリングを解除し、再度ペアリングしてください</td></tr>
+        <tr><td>特定のキーだけ反応しない</td><td>スイッチがソケットに正しく挿さっているか確認してください</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="support">
+    <h2><span class="num">9</span>サポート・保証</h2>
+    <div class="card">
+      <p>初期不良・修理・保証についての詳しい条件は、ご購入いただいたBOOTHの商品ページをご確認ください。</p>
+      <p><a href="https://booth.pm/ja/items/8878345" target="_blank" rel="noopener">BOOTH商品ページを見る</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  JITRA 取扱説明書
+</footer>
+
+</body>
+</html>
