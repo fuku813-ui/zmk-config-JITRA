@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JITRA 動作チェック</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #2b2b2b;
+    --muted: #6b6b6b;
+    --accent: #c0693a;
+    --accent-soft: #f3e3da;
+    --line: #e7e1d8;
+    --key: #ffffff;
+    --key-edge: #d3cbbf;
+    --ok: #2f7d55;
+    --ok-bg: #dcefe3;
+    --live: #3a62b8;
+    --live-bg: #dde6f7;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a18;
+      --card: #262320;
+      --text: #ece7e1;
+      --muted: #aba39a;
+      --accent: #e08a5f;
+      --accent-soft: #3a2c23;
+      --line: #3a342d;
+      --key: #2c2825;
+      --key-edge: #4a433b;
+      --ok: #6fcf98;
+      --ok-bg: #1f3a2b;
+      --live: #8fb0ff;
+      --live-bg: #23305a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    line-height: 1.75;
+    padding-bottom: 60px;
+  }
+  header {
+    padding: 28px 16px 22px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  header .logo { font-size: 13px; letter-spacing: 0.2em; color: var(--muted); }
+  header h1 { margin: 6px 0 4px; font-size: 26px; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  header a { color: var(--accent); font-size: 13px; }
+  main { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .narrow { max-width: 640px; margin-left: auto; margin-right: auto; }
+  ol.how { margin: 0; padding-left: 22px; font-size: 14.5px; }
+  ol.how li { margin-bottom: 4px; }
+  .status { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+  .count { font-size: 22px; font-variant-numeric: tabular-nums; font-family: var(--mono); }
+  .count small { font-size: 13px; color: var(--muted); }
+  .pill { font-size: 13px; font-weight: 600; padding: 3px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--muted); }
+  .pill.pass { background: var(--ok-bg); color: var(--ok); }
+  .pill.warn { background: var(--accent-soft); color: var(--accent); }
+  .status button { margin-left: auto; }
+  button {
+    font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 8px;
+    border: 1px solid var(--key-edge); background: var(--card); color: var(--text); cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 0 0 10px; }
+  .boardscroll { overflow-x: auto; }
+  .board { position: relative; width: 100%; min-width: 600px; aspect-ratio: 1775 / 500; }
+  .k {
+    position: absolute; border: 1px solid var(--key-edge); border-radius: 6px; background: var(--key);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: clamp(10px, 1.25vw, 13px); line-height: 1.15; cursor: pointer; user-select: none;
+    transition: background .08s, border-color .08s;
+  }
+  .k.ok { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+  .k.chat { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .k.down { background: var(--live-bg); border-color: var(--live); color: var(--live); transform: translateY(1px); }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; border: 1px solid; vertical-align: -1px; margin-right: 5px; }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+  .grid2 .card { margin: 0; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+  .checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .chk { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .chk.ok { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
+  .pad {
+    margin-top: 12px; border: 1px dashed var(--key-edge); border-radius: 10px; height: 120px;
+    display: flex; align-items: center; justify-content: center; color: var(--muted);
+    font-size: 13px; text-align: center; padding: 8px; cursor: crosshair; user-select: none;
+  }
+  .log { font-family: var(--mono); font-size: 12px; margin: 0; padding: 0; list-style: none; min-height: 170px; }
+  .log li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; padding: 2px 0; border-bottom: 1px solid var(--line); }
+  .log li.unk { color: var(--accent); }
+  .note { font-size: 13px; color: var(--muted); }
+  .result { display: none; }
+  .result.show { display: block; }
+  a { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .k { transition: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">JITRA</div>
+  <h1>動作チェック</h1>
+  <p>届いたJITRAのキー・トラックボール・エンコーダーがすべて反応するかを確認できます</p>
+  <a href="./">取扱説明書に戻る</a>
+</header>
+
+<main>
+
+  <div class="card narrow">
+    <p class="label">使い方</p>
+    <ol class="how">
+      <li>JITRAをPCとペアリングしてから、このページを開きます。</li>
+      <li>ページの余白を一度クリックしてから、すべてのキーを1回ずつ押します。反応したキーは緑になります。</li>
+      <li>「英数」「かな」はタップして確認します。Macでは入力の切り替えに使われてページに届かないことがあるので、入力モードが切り替わったのを確認したら、画面のキーをクリックして確認済みにしてください。</li>
+      <li>下のチェック項目(エンコーダー・レイヤー・トラックボール)も順に試します。</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="status">
+      <div class="count"><span id="done">0</span><small> / 64 キー</small></div>
+      <span class="pill" id="verdict">確認中</span>
+      <button id="reset" type="button">最初からやり直す</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="label">キー(押した位置で判定するので、OSの配列設定に関係なく確認できます)</p>
+    <div class="boardscroll"><div class="board" id="board"></div></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--key);border-color:var(--key-edge)"></i>未確認</span>
+      <span><i class="sw" style="background:var(--ok-bg);border-color:var(--ok)"></i>反応OK</span>
+      <span><i class="sw" style="background:var(--live-bg);border-color:var(--live)"></i>押している間</span>
+      <span><i class="sw" style="background:var(--accent-soft);border-color:var(--accent)"></i>1回押しで2回入力された疑い</span>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <p class="label">エンコーダー・レイヤー・トラックボール</p>
+      <div class="checks" id="checks"></div>
+      <div class="pad" id="pad">この枠の中でトラックボールを上下左右に転がし、<br>左・中・右クリックを押してください</div>
+      <p class="note">エンコーダーは上下それぞれ1目盛り回します。LOWERは「英数」を押したまま H・J・K・L を1回ずつ押します。クリックはトラックボールを動かした直後に H・J・K で押せます。</p>
+    </div>
+    <div class="card">
+      <p class="label">入力の記録(新しいものが上)</p>
+      <ul class="log" id="log"></ul>
+    </div>
+  </div>
+
+  <div class="card narrow result" id="result-ok">
+    <p style="margin:0"><strong style="color:var(--ok)">すべての確認が終わりました。</strong> 問題なくお使いいただけます。</p>
+  </div>
+  <div class="card narrow">
+    <p class="label">反応しないキーがあるとき</p>
+    <p style="margin:0;font-size:14.5px">まずそのキーのスイッチを抜き、ピンが曲がっていないか確認してから挿し直してください。それでも緑にならない場合や、オレンジ色(2回入力の疑い)が何度押しても出る場合は、この画面のスクリーンショットを添えて<a href="https://booth.pm/ja/items/8878345" target="_blank" rel="noopener">BOOTHのメッセージ</a>からご連絡ください。</p>
+  </div>
+
+</main>
+
+<script>
+const P = [];
+[0,100,200,300,400,500,600,950,1050,1150,1250,1350,1450,1550,1650].forEach(x => P.push([x,0,100,100]));
+P.push([0,100,150,100]); [150,250,350,450,550,900,1000,1100,1200,1300,1400,1500].forEach(x => P.push([x,100,100,100])); P.push([1625,100,125,200]);
+P.push([0,200,175,100]); [175,275,375,475,575,925,1025,1125,1225,1325,1425,1525].forEach(x => P.push([x,200,100,100]));
+P.push([0,300,225,100]); [225,325,425,525,625,975,1075,1175,1275,1375,1475].forEach(x => P.push([x,300,100,100])); P.push([1575,300,175,100]);
+[[0,125],[125,125],[250,125],[375,100],[575,100],[925,125],[1400,125],[1525,125],[1650,100]].forEach(a => P.push([a[0],400,a[1],100]));
+
+const D = [
+["ESC","Escape"],["1","Digit1"],["2","Digit2"],["3","Digit3"],["4","Digit4"],["5","Digit5"],["6","Digit6"],
+["7","Digit7"],["8","Digit8"],["9","Digit9"],["0","Digit0"],["-","Minus"],["^","Equal"],["¥","IntlYen"],["BS","Backspace"],
+["Tab","Tab"],["Q","KeyQ"],["W","KeyW"],["E","KeyE"],["R","KeyR"],["T","KeyT"],
+["Y","KeyY"],["U","KeyU"],["I","KeyI"],["O","KeyO"],["P","KeyP"],["@","BracketLeft"],["[","BracketRight"],["Enter","Enter"],
+["Caps","CapsLock"],["A","KeyA"],["S","KeyS"],["D","KeyD"],["F","KeyF"],["G","KeyG"],
+["H","KeyH"],["J","KeyJ"],["K","KeyK"],["L","KeyL"],[";","Semicolon"],[":","Quote"],["Del","Delete|Backslash"],
+["Shift","ShiftLeft"],["Z","KeyZ"],["X","KeyX"],["C","KeyC"],["V","KeyV"],["B","KeyB"],
+["N","KeyN"],["M","KeyM"],[",","Comma"],[".","Period"],["/","Slash"],["ろ","IntlRo"],["Shift","ShiftRight"],
+["Ctrl","ControlLeft"],["⌘","MetaLeft"],["⌥","AltLeft"],["英数","Lang2"],["Space","Space"],
+["かな","Lang1"],["⌘","MetaRight"],["⌥","AltRight"],["Ctrl","ControlRight"]];
+const ALT = {
+  58: { keys: ["Eisu","Alphanumeric","Lang2"], kc: [240,26] },
+  60: { keys: ["KanaMode","Hiragana","HiraganaKatakana","Katakana","Lang1"], kc: [21,242,243,244] }
+};
+const codeMap = {};
+D.forEach((d, i) => d[1].split("|").forEach(c => codeMap[c] = i));
+function findIdx(e) {
+  if (e.code && codeMap[e.code] !== undefined) return codeMap[e.code];
+  for (const i in ALT) { if (ALT[i].keys.includes(e.key) || ALT[i].kc.includes(e.keyCode)) return +i; }
+  return -1;
+}
+
+const board = document.getElementById("board"), els = [];
+P.forEach((p, i) => {
+  const d = document.createElement("div");
+  d.className = "k";
+  d.style.left = (p[0] / 1775 * 100 + .12) + "%";
+  d.style.top = (p[1] / 500 * 100 + .4) + "%";
+  d.style.width = (p[2] / 1775 * 100 - .24) + "%";
+  d.style.height = (p[3] / 500 * 100 - .8) + "%";
+  d.textContent = D[i][0];
+  d.title = "クリックで確認済みを切り替え";
+  d.addEventListener("click", () => { if (seen.has(i)) { seen.delete(i); chat.delete(i); } else seen.add(i); render(); });
+  board.appendChild(d); els.push(d);
+});
+
+const CHK = [["encU","エンコーダー 上"],["encD","エンコーダー 下"],["lwr","LOWER 矢印"],
+  ["tbR","ボール 右"],["tbL","ボール 左"],["tbU","ボール 上"],["tbD","ボール 下"],
+  ["m0","左クリック"],["m1","中クリック"],["m2","右クリック"]];
+const checks = document.getElementById("checks"), chkEl = {};
+CHK.forEach(c => { const d = document.createElement("div"); d.className = "chk"; d.textContent = c[1]; checks.appendChild(d); chkEl[c[0]] = d; });
+
+let seen, chat, down, lastUp, chk, arrows, lwrSeen, tb;
+function reset() {
+  seen = new Set(); chat = new Set(); down = new Set(); lastUp = {}; chk = new Set();
+  arrows = []; lwrSeen = new Set(); tb = { x: 0, y: 0, nx: 0, ny: 0 };
+  document.getElementById("log").innerHTML = ""; render();
+}
+function render() {
+  els.forEach((el, i) => { el.className = "k" + (chat.has(i) ? " chat" : seen.has(i) ? " ok" : "") + (down.has(i) ? " down" : ""); });
+  for (const k in chkEl) chkEl[k].className = "chk" + (chk.has(k) ? " ok" : "");
+  document.getElementById("done").textContent = seen.size;
+  const v = document.getElementById("verdict");
+  const all = seen.size === 64 && chk.size === CHK.length && !chat.size;
+  if (chat.size) { v.className = "pill warn"; v.textContent = "2回入力の疑い " + chat.size + "件"; }
+  else if (all) { v.className = "pill pass"; v.textContent = "すべてOK"; }
+  else if (seen.size === 64) { v.className = "pill pass"; v.textContent = "全キーOK"; }
+  else { v.className = "pill"; v.textContent = "確認中"; }
+  document.getElementById("result-ok").classList.toggle("show", all);
+}
+function log(code, key, known) {
+  const ul = document.getElementById("log"), li = document.createElement("li");
+  if (!known) li.className = "unk";
+  li.innerHTML = "<span></span><span></span>";
+  li.children[0].textContent = code || "(コードなし)";
+  li.children[1].textContent = key === " " ? "Space" : key;
+  ul.prepend(li);
+  while (ul.children.length > 9) ul.lastChild.remove();
+}
+function arrowCheck(e) {
+  if (!["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code)) return false;
+  const now = performance.now();
+  arrows.push({ c: e.code, t: now });
+  arrows = arrows.filter(a => now - a.t < 250);
+  if (arrows.filter(a => a.c === e.code).length >= 3) {
+    if (e.code === "ArrowUp") chk.add("encU");
+    if (e.code === "ArrowDown") chk.add("encD");
+  }
+  setTimeout(() => {
+    const burst = arrows.filter(a => a.c === e.code && Math.abs(a.t - now) <= 250).length;
+    if (burst <= 1) { lwrSeen.add(e.code); if (lwrSeen.size === 4) chk.add("lwr"); render(); }
+  }, 260);
+  return true;
+}
+
+window.addEventListener("keydown", e => {
+  e.preventDefault();
+  if (e.repeat) return;
+  const idx = findIdx(e);
+  if (idx < 0) { const a = arrowCheck(e); log(e.code, e.key, a); render(); return; }
+  const now = performance.now();
+  if (lastUp[idx] !== undefined && now - lastUp[idx] < 30) chat.add(idx);
+  seen.add(idx); down.add(idx); log(e.code, e.key, true); render();
+}, true);
+window.addEventListener("keyup", e => {
+  e.preventDefault();
+  const idx = findIdx(e);
+  if (idx < 0) return;
+  if (idx === 29 && !seen.has(29)) { seen.add(29); log(e.code, e.key, true); }
+  lastUp[idx] = performance.now(); down.delete(idx); render();
+}, true);
+window.addEventListener("blur", () => { down.clear(); render(); });
+
+const pad = document.getElementById("pad");
+pad.addEventListener("mousemove", e => {
+  tb.x += Math.max(e.movementX, 0); tb.nx += Math.max(-e.movementX, 0);
+  tb.y += Math.max(e.movementY, 0); tb.ny += Math.max(-e.movementY, 0);
+  if (tb.x > 60) chk.add("tbR"); if (tb.nx > 60) chk.add("tbL");
+  if (tb.y > 60) chk.add("tbD"); if (tb.ny > 60) chk.add("tbU");
+  render();
+});
+pad.addEventListener("mousedown", e => { e.preventDefault(); if (e.button <= 2) chk.add("m" + e.button); render(); });
+pad.addEventListener("auxclick", e => e.preventDefault());
+pad.addEventListener("contextmenu", e => e.preventDefault());
+document.getElementById("reset").addEventListener("click", e => { e.currentTarget.blur(); reset(); });
+reset();
+</script>
+
+</body>
+</html>
