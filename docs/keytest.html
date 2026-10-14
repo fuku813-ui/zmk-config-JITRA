@@ -86,11 +86,11 @@
   .k {
     position: absolute; border: 1px solid var(--key-edge); border-radius: 6px; background: var(--key);
     display: flex; align-items: center; justify-content: center; text-align: center;
-    font-size: clamp(10px, 1.25vw, 13px); line-height: 1.15; cursor: pointer; user-select: none;
+    font-size: clamp(10px, 1.25vw, 13px); line-height: 1.15; user-select: none;
     transition: background .08s, border-color .08s;
   }
   .k.ok { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
-  .k.chat { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .k.skip { background: transparent; border-style: dashed; color: var(--muted); cursor: default; }
   .k.down { background: var(--live-bg); border-color: var(--live); color: var(--live); transform: translateY(1px); }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); margin-top: 12px; }
   .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; border: 1px solid; vertical-align: -1px; margin-right: 5px; }
@@ -131,14 +131,14 @@
     <ol class="how">
       <li>JITRAをPCとペアリングしてから、このページを開きます。</li>
       <li>ページの余白を一度クリックしてから、すべてのキーを1回ずつ押します。反応したキーは緑になります。</li>
-      <li>「英数」「かな」はタップして確認します。Macでは入力の切り替えに使われてページに届かないことがあるので、入力モードが切り替わったのを確認したら、画面のキーをクリックして確認済みにしてください。</li>
+      <li>「英数」「かな」はこのページでは判定しません(OSが入力モードの切り替えに使うため、ページまで届きません)。メモ帳などで押してみて、日本語入力と英字入力が切り替われば正常です。</li>
       <li>下のチェック項目(エンコーダー・レイヤー・トラックボール)も順に試します。</li>
     </ol>
   </div>
 
   <div class="card">
     <div class="status">
-      <div class="count"><span id="done">0</span><small> / 64 キー</small></div>
+      <div class="count"><span id="done">0</span><small> / 62 キー</small></div>
       <span class="pill" id="verdict">確認中</span>
       <button id="reset" type="button">最初からやり直す</button>
     </div>
@@ -151,7 +151,7 @@
       <span><i class="sw" style="background:var(--key);border-color:var(--key-edge)"></i>未確認</span>
       <span><i class="sw" style="background:var(--ok-bg);border-color:var(--ok)"></i>反応OK</span>
       <span><i class="sw" style="background:var(--live-bg);border-color:var(--live)"></i>押している間</span>
-      <span><i class="sw" style="background:var(--accent-soft);border-color:var(--accent)"></i>1回押しで2回入力された疑い</span>
+      <span><i class="sw" style="border-color:var(--key-edge);border-style:dashed"></i>このページでは判定しないキー(英数・かな)</span>
     </div>
   </div>
 
@@ -173,7 +173,7 @@
   </div>
   <div class="card narrow">
     <p class="label">反応しないキーがあるとき</p>
-    <p style="margin:0;font-size:14.5px">まずそのキーのスイッチを抜き、ピンが曲がっていないか確認してから挿し直してください。それでも緑にならない場合や、オレンジ色(2回入力の疑い)が何度押しても出る場合は、この画面のスクリーンショットを添えて<a href="https://booth.pm/ja/items/8878345" target="_blank" rel="noopener">BOOTHのメッセージ</a>からご連絡ください。</p>
+    <p style="margin:0;font-size:14.5px">まずそのキーのスイッチを抜き、ピンが曲がっていないか確認してから挿し直してください。それでも緑にならない場合は、この画面のスクリーンショットを添えて<a href="https://booth.pm/ja/items/8878345" target="_blank" rel="noopener">BOOTHのメッセージ</a>からご連絡ください。</p>
   </div>
 
 </main>
@@ -197,16 +197,12 @@ const D = [
 ["N","KeyN"],["M","KeyM"],[",","Comma"],[".","Period"],["/","Slash"],["ろ","IntlRo"],["Shift","ShiftRight"],
 ["Ctrl","ControlLeft"],["⌘","MetaLeft"],["⌥","AltLeft"],["英数","Lang2"],["Space","Space"],
 ["かな","Lang1"],["⌘","MetaRight"],["⌥","AltRight"],["Ctrl","ControlRight"]];
-const ALT = {
-  58: { keys: ["Eisu","Alphanumeric","Lang2"], kc: [240,26] },
-  60: { keys: ["KanaMode","Hiragana","HiraganaKatakana","Katakana","Lang1"], kc: [21,242,243,244] }
-};
+const SKIP = new Set([58, 60]);
+const TOTAL = D.length - SKIP.size;
 const codeMap = {};
-D.forEach((d, i) => d[1].split("|").forEach(c => codeMap[c] = i));
+D.forEach((d, i) => { if (!SKIP.has(i)) d[1].split("|").forEach(c => codeMap[c] = i); });
 function findIdx(e) {
-  if (e.code && codeMap[e.code] !== undefined) return codeMap[e.code];
-  for (const i in ALT) { if (ALT[i].keys.includes(e.key) || ALT[i].kc.includes(e.keyCode)) return +i; }
-  return -1;
+  return e.code && codeMap[e.code] !== undefined ? codeMap[e.code] : -1;
 }
 
 const board = document.getElementById("board"), els = [];
@@ -218,8 +214,6 @@ P.forEach((p, i) => {
   d.style.width = (p[2] / 1775 * 100 - .24) + "%";
   d.style.height = (p[3] / 500 * 100 - .8) + "%";
   d.textContent = D[i][0];
-  d.title = "クリックで確認済みを切り替え";
-  d.addEventListener("click", () => { if (seen.has(i)) { seen.delete(i); chat.delete(i); } else seen.add(i); render(); });
   board.appendChild(d); els.push(d);
 });
 
@@ -229,21 +223,20 @@ const CHK = [["encU","エンコーダー 上"],["encD","エンコーダー 下"]
 const checks = document.getElementById("checks"), chkEl = {};
 CHK.forEach(c => { const d = document.createElement("div"); d.className = "chk"; d.textContent = c[1]; checks.appendChild(d); chkEl[c[0]] = d; });
 
-let seen, chat, down, lastUp, chk, arrows, lwrSeen, tb;
+let seen, down, chk, arrows, lwrSeen, tb;
 function reset() {
-  seen = new Set(); chat = new Set(); down = new Set(); lastUp = {}; chk = new Set();
+  seen = new Set(); down = new Set(); chk = new Set();
   arrows = []; lwrSeen = new Set(); tb = { x: 0, y: 0, nx: 0, ny: 0 };
   document.getElementById("log").innerHTML = ""; render();
 }
 function render() {
-  els.forEach((el, i) => { el.className = "k" + (chat.has(i) ? " chat" : seen.has(i) ? " ok" : "") + (down.has(i) ? " down" : ""); });
+  els.forEach((el, i) => { el.className = "k" + (SKIP.has(i) ? " skip" : seen.has(i) ? " ok" : "") + (down.has(i) ? " down" : ""); });
   for (const k in chkEl) chkEl[k].className = "chk" + (chk.has(k) ? " ok" : "");
   document.getElementById("done").textContent = seen.size;
   const v = document.getElementById("verdict");
-  const all = seen.size === 64 && chk.size === CHK.length && !chat.size;
-  if (chat.size) { v.className = "pill warn"; v.textContent = "2回入力の疑い " + chat.size + "件"; }
-  else if (all) { v.className = "pill pass"; v.textContent = "すべてOK"; }
-  else if (seen.size === 64) { v.className = "pill pass"; v.textContent = "全キーOK"; }
+  const all = seen.size === TOTAL && chk.size === CHK.length;
+  if (all) { v.className = "pill pass"; v.textContent = "すべてOK"; }
+  else if (seen.size === TOTAL) { v.className = "pill pass"; v.textContent = "全キーOK"; }
   else { v.className = "pill"; v.textContent = "確認中"; }
   document.getElementById("result-ok").classList.toggle("show", all);
 }
@@ -277,8 +270,6 @@ window.addEventListener("keydown", e => {
   if (e.repeat) return;
   const idx = findIdx(e);
   if (idx < 0) { const a = arrowCheck(e); log(e.code, e.key, a); render(); return; }
-  const now = performance.now();
-  if (lastUp[idx] !== undefined && now - lastUp[idx] < 30) chat.add(idx);
   seen.add(idx); down.add(idx); log(e.code, e.key, true); render();
 }, true);
 window.addEventListener("keyup", e => {
@@ -286,7 +277,7 @@ window.addEventListener("keyup", e => {
   const idx = findIdx(e);
   if (idx < 0) return;
   if (idx === 29 && !seen.has(29)) { seen.add(29); log(e.code, e.key, true); }
-  lastUp[idx] = performance.now(); down.delete(idx); render();
+  down.delete(idx); render();
 }, true);
 window.addEventListener("blur", () => { down.clear(); render(); });
 
