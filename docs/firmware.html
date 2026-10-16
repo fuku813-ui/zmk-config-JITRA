@@ -261,15 +261,16 @@ document.querySelectorAll('figure[data-img]').forEach(function (f) {
   var img = new Image();
   img.alt = cap ? cap.textContent : '';
   img.loading = 'lazy';
-  img.onload = function () { f.insertBefore(img, cap); };
   img.onerror = function () {
     var ph = document.createElement('div');
     ph.className = 'ph';
     ph.innerHTML = '<div><b></b><span></span></div>';
     ph.querySelector('b').textContent = src.split('/').pop();
     ph.querySelector('span').textContent = '写真:' + img.alt;
-    f.insertBefore(ph, cap);
+    f.replaceChild(ph, img);
   };
+  // lazy の画像は DOM に入れないと読み込まれないので、先に挿入する
+  f.insertBefore(img, cap);
   img.src = src;
 });
 </script>
