@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JITRA 組み立てガイド</title>
+<link rel="stylesheet" href="guide.css">
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="brand" href="index.html">JITRA</a>
+  <a href="assembly.html" aria-current="page">組み立て</a>
+  <a href="firmware.html">キー配列・ファームウェア</a>
+  <a href="index.html">取扱説明書</a>
+</div></div>
+
+<header class="hero">
+  <p class="eyebrow">Assembly guide</p>
+  <h1>組み立てガイド</h1>
+  <p>JITRA は本体を組み立て済みでお届けします。お手元でキースイッチ・キーキャップ・トラックボール・電池を取り付けて、使い始めるまでの手順です。所要時間は 30 分ほどです。</p>
+  <figure data-img="assets/guide/a05-complete.jpg"><figcaption>組み立てが終わった JITRA</figcaption></figure>
+</header>
+
+<main>
+  <ul class="jump">
+    <li><a href="#prepare"><b>0</b>用意するもの</a></li>
+    <li><a href="#build"><b>1</b>パーツを取り付ける</a></li>
+    <li><a href="#start"><b>2</b>電源を入れて接続する</a></li>
+    <li><a href="#trouble"><b>?</b>困ったとき</a></li>
+  </ul>
+
+  <div class="note warn">
+    <strong>作業の前に</strong>
+    <p>キースイッチのピンは細く、斜めに押し込むと曲がります。1 個ずつまっすぐ押し込んでください。本体の中はケーブルで上下がつながっています。ボトムケースを開けるときは、ケーブルを引っ張らないようにゆっくり開いてください。</p>
+  </div>
+
+  <!-- ───────── 0 ───────── -->
+  <section class="part" id="prepare">
+    <p class="label">00 — Prepare</p>
+    <h2>用意するもの</h2>
+    <p class="lead">同梱物を確認し、別途ご用意いただくパーツをそろえます。</p>
+
+    <div class="step">
+      <div class="n">1</div>
+      <div>
+        <h3>同梱物を確認する</h3>
+        <p>同梱物は JITRA 本体(左手側・右手側)のみです。エンコーダーのノブは取り付け済みです。</p>
+        <figure data-img="assets/guide/a01-unbox.jpg"><figcaption>お届け時の状態(スイッチ・キーキャップ・ボールは付属しません)</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">2</div>
+      <div>
+        <h3>別途ご用意いただくパーツ</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>パーツ</th><th>数量</th><th>条件</th></tr></thead>
+          <tbody>
+            <tr><td>キースイッチ</td><td class="num">64 個</td><td>Kailh Choc V2(ロープロファイル)</td></tr>
+            <tr><td>キーキャップ</td><td class="num">64 個</td><td>十字軸(MX 互換)。1U × 53、1.25U × 6、1.5U × 1、1.75U × 2、2.25U × 1、ISO Enter × 1</td></tr>
+            <tr><td>トラックボール</td><td class="num">1 個</td><td>直径 25 mm</td></tr>
+            <tr><td>単 4 電池</td><td class="num">2 本</td><td>左右に 1 本ずつ。アルカリ・ニッケル水素どちらも可</td></tr>
+            <tr><td>USB Type-C ケーブル</td><td class="num">1 本</td><td>データ通信対応のもの(ファームウェアの書き込み・キー配列の変更時のみ使用)</td></tr>
+          </tbody>
+        </table></div>
+        <figure data-img="assets/guide/a02-parts.jpg"><figcaption>用意するパーツ一式</figcaption></figure>
+        <div class="note">
+          <strong>キーキャップ選びのヒント</strong>
+          <p>1.25U が 6 個、ISO Enter が 1 個必要です。この組み合わせを 1 セットでそろえられるロープロファイル品は多くありません。<span class="todo">要確認:動作確認済みの具体的な製品名と、足りないサイズの補い方</span></p>
+        </div>
+        <div class="note">
+          <strong>スタビライザーについて</strong>
+          <p>JITRA の基板にはスタビライザーの取り付け穴がありません。2.25U・ISO Enter もスタビライザーなしで使います。キーの端を押したときに少し傾くのは仕様です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 1 ───────── -->
+  <section class="part" id="build">
+    <p class="label">01 — Build</p>
+    <h2>パーツを取り付ける</h2>
+    <p class="lead">スイッチ → キーキャップ → トラックボール → 電池の順に取り付けます。</p>
+
+    <div class="step">
+      <div class="n">3</div>
+      <div>
+        <h3>キースイッチを取り付ける</h3>
+        <p>プレートの穴に合わせて、真上からまっすぐ押し込みます。ボトムケースを外し、基板を裏から指で支えながら差し込むと安定します。</p>
+        <figure data-img="assets/guide/a03-switch-orient.jpg"><figcaption>青枠の位置は、ほかのキーとソケットの向きが逆になっています</figcaption></figure>
+        <div class="note warn">
+          <strong>青枠のキーは向きが逆です</strong>
+          <p>数字の段すべてと、写真の青枠の位置は、ソケットの穴の配置が上下逆になっています。差し込む前に、スイッチのピンと穴の位置が合っているか必ず確認してください。</p>
+        </div>
+        <div class="note warn">
+          <strong>ボトムケースを外すとき</strong>
+          <p>ボトムケースと基板はケーブルでつながったままです。ケーブルを引っ張らないよう、ゆっくり開いて横に置いてください。</p>
+        </div>
+        <p>差し込むときに強い抵抗を感じたら、一度抜いてピンが曲がっていないか確認してください。曲がったピンはピンセットで戻せます。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">4</div>
+      <div>
+        <h3>キーキャップを取り付ける</h3>
+        <p>図には 1U 以外のキーのサイズを書いています。図に沿って、それぞれの位置に合ったサイズのキーキャップを取り付けてください。何も書いていないキーは 1U です。</p>
+        <figure data-img="assets/guide/a04-keycap-size.jpg"><figcaption>キーキャップのサイズ(左:左手側、右:右手側)</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">5</div>
+      <div>
+        <h3>トラックボールを取り付ける</h3>
+        <p>トラックボールのケースはマグネットで固定されていて、簡単に取り外せます。ボールはケースに上から押し込むと入ります。</p>
+        <div class="grid2">
+          <figure data-img="assets/guide/a06-trackball-before.jpg"><figcaption>ボールを入れる前</figcaption></figure>
+          <figure data-img="assets/guide/a06-trackball-after.jpg"><figcaption>ボールを入れた後</figcaption></figure>
+        </div>
+        <p>ボールを外すときは、ボールを引っ張るか、ケースの底の穴から押し出してください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">6</div>
+      <div>
+        <h3>電池を入れる</h3>
+        <ol>
+          <li>本体を裏返し、上部の電池カバーを外します。</li>
+          <li>単 4 電池を 1 本ずつ入れます。裏から見て、左右とも左側が + です。</li>
+          <li>電池カバーを戻します。</li>
+        </ol>
+        <div class="grid2">
+          <figure data-img="assets/guide/a07-battery-cover.jpg"><figcaption>裏面。上部の半透明のパーツが電池カバー</figcaption></figure>
+          <figure data-img="assets/guide/a08-battery.jpg"><figcaption>カバーを外して電池を入れた状態</figcaption></figure>
+        </div>
+        <div class="note warn">
+          <strong>注意</strong>
+          <p>種類の違う電池や、新しい電池と古い電池を混ぜて使わないでください。長期間使わないときは電池を抜いてください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── 2 ───────── -->
+  <section class="part" id="start">
+    <p class="label">02 — Start</p>
+    <h2>電源を入れて接続する</h2>
+    <p class="lead">右手側が PC・スマートフォンと接続する側(親機)です。左手側は右手側と自動で接続されます。</p>
+
+    <div class="step">
+      <div class="n">7</div>
+      <div>
+        <h3>左右の電源を入れる</h3>
+        <p>電源スイッチは、左右とも本体の奥側の側面、USB ポートの隣にあります。手前から見てスイッチを左へ動かすと ON、右へ動かすと OFF です。スイッチの横にオレンジ色が見えていれば ON です。</p>
+        <div class="grid2">
+          <figure data-img="assets/guide/a09-power-on.jpg"><figcaption>ON(オレンジ色が見える)</figcaption></figure>
+          <figure data-img="assets/guide/a09-power-off.jpg"><figcaption>OFF(オレンジ色が見えない)</figcaption></figure>
+        </div>
+        <p style="font-size:13px;color:var(--muted)">写真は本体の奥側から撮影しているため、左右が逆に写っています。</p>
+        <div class="note warn">
+          <strong>初回の通電確認</strong>
+          <p>電源を入れたら、本体が異常に熱くなっていないか確認してください。触れないほど熱い・異臭がするなどの場合は、すぐに電源を OFF にして電池を抜き、ご連絡ください。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">8</div>
+      <div>
+        <h3>Bluetooth で接続する</h3>
+        <ol>
+          <li>PC・スマートフォンの Bluetooth 設定を開きます。</li>
+          <li>デバイスの一覧に表示される <code>JITRA</code> を選んで接続します。</li>
+          <li>メモ帳などで、左右両方のキーが入力できることを確認します。</li>
+        </ol>
+        <p>左手側の入力が反映されないときは、左右両方の電源を入れ直してください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">9</div>
+      <div>
+        <h3>トラックボールとダイヤルを確かめる</h3>
+        <ul>
+          <li>ボールを転がすとカーソルが動きます。動かしている間は H・J・K の位置が左・中・右クリックになり、少し待つと文字入力に戻ります。</li>
+          <li>左手側のダイヤル(ロータリーエンコーダー)を回すと上下にスクロールします。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">10</div>
+      <div>
+        <h3>複数の機器を切り替える(必要な場合)</h3>
+        <p>JITRA は最大 5 台の機器を登録できます。「かな」キーを押しながら、次のキーで接続先を切り替えます。</p>
+        <div class="tbl"><table>
+          <thead><tr><th>「かな」と一緒に押すキー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td>右手側 ⌘</td><td>接続先 1</td></tr>
+            <tr><td>右手側 ⌥</td><td>接続先 2</td></tr>
+            <tr><td>右手側 Ctrl</td><td>接続先 3</td></tr>
+            <tr><td>左手側 ⌘</td><td>接続先 4</td></tr>
+            <tr><td>左手側 ⌥</td><td>接続先 5</td></tr>
+            <tr><td>Backspace</td><td>いま選んでいる接続先の登録を消す</td></tr>
+          </tbody>
+        </table></div>
+        <p>新しい機器を登録するときは、空いている接続先に切り替えてから、その機器の Bluetooth 設定で <code>JITRA</code> を選びます。</p>
+      </div>
+    </div>
+
+    <div class="done">
+      <p class="eyebrow">Setup complete</p>
+      <h3>おつかれさまでした</h3>
+      <p>キー配列とレイヤーの使い方は<a href="index.html">取扱説明書</a>、キー配列の変更は<a href="firmware.html">キー配列・ファームウェアガイド</a>をご覧ください。</p>
+    </div>
+  </section>
+
+  <!-- ───────── ? ───────── -->
+  <section class="part" id="trouble">
+    <p class="label">Troubleshooting</p>
+    <h2>困ったとき</h2>
+
+    <details>
+      <summary>特定のキーだけ反応しない</summary>
+      <div><p>そのキーのスイッチを一度抜き、ピンが曲がっていないか、向きが合っているか(手順 3 の青枠)を確認してから差し直してください。ほかのキーのスイッチと入れ替えて、スイッチ側の不良かどうかを切り分けることもできます。</p></div>
+    </details>
+    <details>
+      <summary>左右どちらも反応しない</summary>
+      <div><p>電池の向きと残量、電源スイッチが ON(オレンジ色が見える状態)になっているかを確認してください。</p></div>
+    </details>
+    <details>
+      <summary>左手側だけ反応しない</summary>
+      <div><p>左手側の電池を確認し、左右両方の電源を入れ直してください。直らない場合は<a href="firmware.html#reset">接続のリセット</a>を行ってください。</p></div>
+    </details>
+    <details>
+      <summary>PC と接続できない・すぐ切れる</summary>
+      <div><p>PC の Bluetooth 設定から <code>JITRA</code> を削除し、「かな」+ Backspace で JITRA 側の登録も消してから、もう一度接続してください。</p></div>
+    </details>
+    <details>
+      <summary>カーソルが勝手に動く・動きがぎこちない</summary>
+      <div><p>トラックボールケースを外し、ボールとケースの内側のほこりを取り除いてください。</p></div>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <a href="index.html">取扱説明書</a>
+  <a href="firmware.html">キー配列・ファームウェア</a>
+  <a href="https://github.com/fuku813-ui/zmk-config-JITRA">GitHub</a>
+  <span class="todo">要確認:BOOTH 商品ページの URL</span>
+</footer>
+
+<script>
+// 画像ファイルがあれば表示し、まだ無ければ撮影指示の枠を出す
+document.querySelectorAll('figure[data-img]').forEach(function (f) {
+  var src = f.getAttribute('data-img');
+  var cap = f.querySelector('figcaption');
+  var img = new Image();
+  img.alt = cap ? cap.textContent : '';
+  img.loading = 'lazy';
+  img.onload = function () { f.insertBefore(img, cap); };
+  img.onerror = function () {
+    var ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.innerHTML = '<div><b></b><span></span></div>';
+    ph.querySelector('b').textContent = src.split('/').pop();
+    ph.querySelector('span').textContent = '写真:' + img.alt;
+    f.insertBefore(ph, cap);
+  };
+  img.src = src;
+});
+</script>
+</body>
+</html>
