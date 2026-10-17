@@ -123,3 +123,4 @@ details > div { padding: 0 14px 12px; }
 footer { max-width: 720px; margin: 40px auto 0; padding: 20px 16px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
 footer a { color: var(--muted); }
 .done .eyebrow { font-size: 12px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin: 0; }
+figure.fit img { width: auto; max-width: 100%; }

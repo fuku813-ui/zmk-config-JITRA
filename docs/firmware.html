@@ -17,7 +17,7 @@
 <header class="hero">
   <p class="eyebrow">Keymap &amp; firmware guide</p>
   <h1>キー配列・ファームウェア</h1>
-  <p>JITRA はオープンソースのファームウェア ZMK で動いています。キー配列はブラウザから変更できます。目的に合わせて方法を選んでください。</p>
+  <p>JITRA はオープンソースのファームウェア ZMK で動いています。出荷時にファームウェアは書き込み済みなので、そのままお使いいただけます。キー配列を変えたいとき、接続がおかしいときにこのページをご覧ください。</p>
 </header>
 
 <main>
@@ -26,10 +26,23 @@
     <tbody>
       <tr><td>キーの割り当てを変えたい</td><td><a href="#studio">A. ZMK Studio</a></td><td>不要</td></tr>
       <tr><td>マクロ・ダイヤルの動作・トラックボール速度なども変えたい</td><td><a href="#github">B. GitHub でビルド</a></td><td>必要</td></tr>
-      <tr><td>ファームウェアを書き込み直したい</td><td><a href="#flash">C. 書き込み</a></td><td>どちらでも</td></tr>
-      <tr><td>左右がつながらない・接続が不安定</td><td><a href="#reset">D. 接続のリセット</a></td><td>どちらでも</td></tr>
+      <tr><td>ファームウェアを書き込みたい</td><td><a href="#flash">C. 書き込み</a></td><td>どちらでも</td></tr>
+      <tr><td>左右がつながらない・接続が不安定</td><td><a href="#reset">C. 書き込み</a>をやり直す</td><td>どちらでも</td></tr>
     </tbody>
   </table></div>
+
+  <section class="part" id="how">
+    <p class="label">Overview</p>
+    <h2>接続のしくみ</h2>
+    <p>PC とつながるのは右手側(トラックボール側)だけです。左手側(ダイヤル側)は右手側を経由して PC に入力を送ります。</p>
+    <div class="note">
+      <p><strong>左手側</strong> ⇔ 無線 ⇔ <strong>右手側</strong> ⇔ 無線(Bluetooth)または USB ⇔ <strong>PC</strong></p>
+    </div>
+    <ul>
+      <li>右手側を USB で PC につなぐと、有線のキーボードとしても使えます。左右の間は常に無線です。</li>
+      <li>左手側だけを USB でつないでも、キーボードとしては動きません(書き込み用の接続のみ)。</li>
+    </ul>
+  </section>
 
   <!-- ───────── A ───────── -->
   <section class="part" id="studio">
@@ -51,41 +64,37 @@
     <div class="step">
       <div class="n">2</div>
       <div>
-        <h3>右手側を USB で接続する</h3>
-        <p><strong>右手側</strong>(トラックボールのある側)を USB ケーブルで PC に接続します。ZMK Studio は右手側からのみ接続できます。左手側の配列も右手側からまとめて変更できます。</p>
+        <h3>右手側を USB でつないで接続する</h3>
+        <ol>
+          <li><strong>右手側</strong>を USB ケーブルで PC に接続します。ZMK Studio は右手側からのみ接続できます。左手側のキーも右手側からまとめて変更できます。</li>
+          <li><a href="https://zmk.studio/">zmk.studio</a> を開き、<code>USB</code> を押します。</li>
+          <li>表示される一覧から <code>JITRA</code> を選んで接続します。</li>
+        </ol>
+        <figure data-img="assets/guide/f01-studio-connect.jpg"><figcaption>ZMK Studio を開いたところ。USB を押して JITRA を選ぶ</figcaption></figure>
       </div>
     </div>
 
     <div class="step">
       <div class="n">3</div>
       <div>
-        <h3>ZMK Studio を開いて接続する</h3>
+        <h3>キー配置を編集して保存する</h3>
         <ol>
-          <li><a href="https://zmk.studio/">zmk.studio</a> を開きます。</li>
-          <li><code>USB</code> を選び、一覧に出る JITRA を選んで <code>接続</code> を押します。</li>
-          <li>JITRA の配列が表示されれば接続できています。</li>
+          <li>左の一覧でレイヤー(DEFAULT・LOWER・RAISE など)を選びます。</li>
+          <li>変更したいキーをクリックし、割り当てるキーや動作を選びます。変更はすぐに反映されるので、試しながら自分用の配置を作れます。</li>
+          <li>確定するには、右上の保存アイコン(フロッピーディスクの形)を押します。</li>
         </ol>
-        <figure data-img="assets/guide/f01-studio-connect.png"><figcaption>ZMK Studio の接続画面</figcaption></figure>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="n">4</div>
-      <div>
-        <h3>キーを変更して保存する</h3>
-        <ol>
-          <li>画面上部でレイヤー(DEFAULT・LOWER・RAISE など)を選びます。</li>
-          <li>変更したいキーをクリックし、下の一覧から割り当てるキーや動作を選びます。</li>
-          <li>変更はすぐに反映されます。確定するには右上の <code>Save</code> を押します。</li>
-        </ol>
-        <figure data-img="assets/guide/f02-studio-edit.png"><figcaption>キーを選んで割り当てを変更する</figcaption></figure>
-        <div class="note">
-          <strong>元に戻したいとき</strong>
-          <p>Save 前なら <code>Discard</code> で取り消せます。出荷時の配列に戻すには <code>Restore Stock Settings</code> を押します。</p>
+        <figure data-img="assets/guide/f02-studio-edit.jpg"><figcaption>編集画面。左でレイヤーを選び、キーをクリックして変更する</figcaption></figure>
+        <div class="note warn">
+          <strong>保存を忘れずに</strong>
+          <p>保存せずに USB を外したり電源を切ったりすると、変更は消えます。保存前の変更は、右上のゴミ箱アイコンで取り消せます。</p>
         </div>
         <div class="note warn">
-          <strong>Save を忘れずに</strong>
-          <p>Save を押さずに USB を外したり電源を切ったりすると、変更は消えます。</p>
+          <strong>MOUSE・SCROLL レイヤーは消さないでください</strong>
+          <p>トラックボールを動かすと MOUSE レイヤーに、スクロール操作では SCROLL レイヤーに自動で切り替わります。レイヤーを削除したり、順番を変えたりすると、トラックボールのクリックやスクロールが正しく動かなくなります。</p>
+        </div>
+        <div class="note">
+          <strong>出荷時の配列に戻したいとき</strong>
+          <p>画面上部の <code>JITRA</code> のメニューから <code>Restore Stock Settings</code> を選びます。<a href="#flash">C. 書き込み</a>をやり直しても出荷時の配列に戻ります。</p>
         </div>
       </div>
     </div>
@@ -107,7 +116,6 @@
           <li>右上の <code>Fork</code> → <code>Create a new fork</code> を選びます。</li>
           <li>Owner に自分のアカウントを選び、名前はそのままで <code>Create fork</code> を押します。</li>
         </ol>
-        <figure data-img="assets/guide/f03-fork.png"><figcaption>Fork メニュー</figcaption></figure>
       </div>
     </div>
 
@@ -115,7 +123,7 @@
       <div class="n">2</div>
       <div>
         <h3>設定を編集する</h3>
-        <p>編集するファイルは次のとおりです。GitHub の画面上で鉛筆アイコンから直接編集できます。</p>
+        <p>fork したリポジトリで、次のファイルを編集します。GitHub の画面上で鉛筆アイコンから直接編集できます。</p>
         <div class="tbl"><table>
           <thead><tr><th>ファイル</th><th>内容</th></tr></thead>
           <tbody>
@@ -130,20 +138,24 @@
     <div class="step">
       <div class="n">3</div>
       <div>
-        <h3>GitHub Actions でビルドする</h3>
+        <h3>GitHub Actions でビルドしてダウンロードする</h3>
+        <p>変更を保存(Commit)すると、自動でビルドが始まります。2 分ほどで終わります。</p>
         <ol>
-          <li>変更を保存(Commit)すると、自動でビルドが始まります。</li>
-          <li>fork したリポジトリの <code>Actions</code> タブを開きます。初回は有効化ボタンが出るので押してください。</li>
-          <li>一番上のビルドが緑のチェックになったら開き、下部の <code>firmware</code> をダウンロードします。</li>
+          <li>fork したリポジトリの <code>Actions</code> タブを開き、左の一覧から <code>.github/workflows/build.yml</code> を選びます。初回は有効化ボタンが出るので押してください。</li>
+          <li>一番上(最新)のビルドを開きます。緑のチェックが付いていれば成功です。</li>
+          <li>ページを下までスクロールし、<code>Artifacts</code> の <code>firmware</code> のダウンロードボタンを押します。</li>
         </ol>
-        <figure data-img="assets/guide/f04-actions.png"><figcaption>Actions 画面の firmware のダウンロード</figcaption></figure>
-        <p>zip を展開すると、次の 3 つのファイルが入っています。</p>
+        <figure data-img="assets/guide/f03-actions-workflow.jpg"><figcaption>Actions タブで build.yml を選ぶ</figcaption></figure>
+        <figure data-img="assets/guide/f04-actions-latest.jpg"><figcaption>一番上の最新のビルドを開く</figcaption></figure>
+        <figure data-img="assets/guide/f05-actions-download.jpg"><figcaption>下にスクロールして firmware をダウンロードする</figcaption></figure>
+        <p>ダウンロードした zip を展開すると、次の 3 つのファイルが入っています。</p>
+        <figure class="fit" data-img="assets/guide/f06-unzip.jpg"><figcaption>zip を展開したところ</figcaption></figure>
         <div class="tbl"><table>
           <thead><tr><th>ファイル</th><th>用途</th></tr></thead>
           <tbody>
+            <tr><td><code>settings_reset-seeeduino_xiao_ble-zmk.uf2</code></td><td>設定の初期化用(左右共通)</td></tr>
             <tr><td><code>jitra_R-seeeduino_xiao_ble-zmk.uf2</code></td><td>右手側用</td></tr>
             <tr><td><code>jitra_L-seeeduino_xiao_ble-zmk.uf2</code></td><td>左手側用</td></tr>
-            <tr><td><code>settings_reset-seeeduino_xiao_ble-zmk.uf2</code></td><td>接続のリセット用</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -153,75 +165,98 @@
   <!-- ───────── C ───────── -->
   <section class="part" id="flash">
     <p class="label">C — Flash</p>
-    <h2>ファームウェアを書き込む</h2>
-    <p class="lead">右手側・左手側にそれぞれ別のファイルを書き込みます。最新の出荷時ファームウェアは<a href="https://github.com/fuku813-ui/zmk-config-JITRA/actions">こちらの Actions</a> からもダウンロードできます。</p>
+    <h2 id="reset">ファームウェアを書き込む</h2>
+    <p class="lead">左右それぞれに、まず設定の初期化用ファイル、続けて本体用のファイルを書き込みます。左右がつながらない・接続が不安定なときも、この手順で直ります。</p>
+
+    <div class="note">
+      <strong>出荷時のファームウェアを使う場合</strong>
+      <p><a href="https://github.com/fuku813-ui/zmk-config-JITRA/actions">fuku813-ui/zmk-config-JITRA の Actions</a> から、B-3 と同じ手順でダウンロードできます(GitHub へのログインが必要です)。</p>
+    </div>
+    <div class="note warn">
+      <strong>書き込む前に</strong>
+      <p>設定の初期化を行うと、ZMK Studio で変更したキー配列と、Bluetooth の接続先の登録がすべて消えます。</p>
+    </div>
 
     <div class="step">
       <div class="n">1</div>
       <div>
-        <h3>書き込みモードにする</h3>
-        <ol>
-          <li>リセットボタンはケースの中にあります。本体を裏返してボトムケースを外し、中のコントローラーが見えるようにします。ボトムケースと基板はケーブルでつながったままなので、引っ張らないようにゆっくり開いてください。</li>
-          <li>右手側を USB ケーブルで PC に接続します。USB ポートは本体の奥側の側面、電源スイッチの隣にあります。</li>
-          <li>コントローラーのリセットボタン(写真の赤枠)を、素早く 2 回押します。</li>
-          <li>PC に <code>XIAO-SENSE</code> というドライブが表示されれば書き込みモードです。</li>
-        </ol>
-        <figure data-img="assets/guide/f05-reset-button.jpg"><figcaption>リセットボタンの位置(赤枠)。左手側・右手側ともコントローラーの角にあります</figcaption></figure>
-        <div class="todo">要確認:ドライブ名が XIAO-SENSE で表示されるか実機で確認</div>
-        <p>ドライブが出ない場合は、USB ケーブルがデータ通信に対応しているか確認してください。</p>
+        <h3>リセットボタンが押せるようにする</h3>
+        <p>リセットボタンはケースの中にあります。本体を裏返してボトムケースを外し、中のコントローラーが見えるようにします。ボトムケースと基板はケーブルでつながったままなので、引っ張らないようにゆっくり開いてください。</p>
+        <figure data-img="assets/guide/f07-reset-button.jpg"><figcaption>リセットボタンの位置(赤枠)。左手側・右手側ともコントローラーの角にあります</figcaption></figure>
       </div>
     </div>
 
     <div class="step">
       <div class="n">2</div>
       <div>
-        <h3>ファイルをコピーする</h3>
+        <h3>右手側を書き込みモードにする</h3>
         <ol>
-          <li><code>jitra_R-seeeduino_xiao_ble-zmk.uf2</code> を <code>XIAO-SENSE</code> ドライブにドラッグ&amp;ドロップします。</li>
-          <li>コピーが終わると自動で再起動し、ドライブが消えます。「ディスクの不正な取り出し」の通知が出ても、書き込みは正常に終わっています。</li>
-          <li>左手側も同じ手順で、<code>jitra_L-seeeduino_xiao_ble-zmk.uf2</code> を書き込みます。</li>
+          <li>右手側を USB ケーブルで PC に接続します。電源スイッチは OFF のままで構いません。USB ポートは本体の奥側の側面、電源スイッチの隣にあります。</li>
+          <li>リセットボタンを素早く 2 回押します。</li>
+          <li>PC に <code>XIAO-SENSE</code> というドライブが表示されれば書き込みモードです。</li>
         </ol>
-        <figure data-img="assets/guide/f06-drive.png"><figcaption>XIAO-SENSE ドライブに uf2 ファイルをコピーする</figcaption></figure>
+        <figure class="fit" data-img="assets/guide/f08-xiao-drive.jpg"><figcaption>XIAO-SENSE ドライブ</figcaption></figure>
+        <p>ドライブが表示されない場合は、USB ケーブルがデータ通信に対応しているか確認してください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">3</div>
+      <div>
+        <h3>設定の初期化用ファイルを書き込む</h3>
+        <p><code>settings_reset-seeeduino_xiao_ble-zmk.uf2</code> を <code>XIAO-SENSE</code> ドライブにドラッグ&amp;ドロップします。書き込みが終わると、ドライブは自動で消えます。</p>
+        <figure class="fit" data-img="assets/guide/f09-mac-error.jpg"><figcaption>Mac で表示されるメッセージ。書き込みはできているので OK を押して進めてください</figcaption></figure>
+        <div class="note">
+          <strong>Mac をお使いの場合</strong>
+          <p>「デバイスがなくなったため、操作を完了できません。」と表示されますが、書き込みは正常に終わっています。<code>OK</code> を押して次へ進んでください。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">4</div>
+      <div>
+        <h3>右手側用のファイルを書き込む</h3>
+        <ol>
+          <li>もう一度リセットボタンを素早く 2 回押し、<code>XIAO-SENSE</code> ドライブを表示させます。</li>
+          <li><code>jitra_R-seeeduino_xiao_ble-zmk.uf2</code> をドラッグ&amp;ドロップします。</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">5</div>
+      <div>
+        <h3>左手側も同じ手順で書き込む</h3>
+        <p>左手側を USB でつなぎ、手順 2〜4 と同じように、<code>settings_reset-…uf2</code> → <code>jitra_L-seeeduino_xiao_ble-zmk.uf2</code> の順に書き込みます。</p>
         <div class="note warn">
-          <strong>左右を間違えないでください</strong>
+          <strong>左右のファイルを間違えないでください</strong>
           <p>右手側に左手用のファイルを書き込むと動作しません。間違えた場合は、正しいファイルを書き込み直せば元に戻ります。</p>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ───────── D ───────── -->
-  <section class="part" id="reset">
-    <p class="label">D — Reset</p>
-    <h2>接続をリセットする</h2>
-    <p class="lead">左右がつながらない、接続が不安定、ペアリングがうまくいかないときの手順です。ZMK Studio で変更した配列も出荷時に戻ります。</p>
 
     <div class="step">
-      <div class="n">1</div>
+      <div class="n">6</div>
       <div>
-        <h3>PC 側の登録を削除する</h3>
-        <p>PC・スマートフォンの Bluetooth 設定から <code>JITRA</code> を削除します。</p>
+        <h3>電源を入れてリセットボタンを 1 回押す</h3>
+        <ol>
+          <li>USB ケーブルを外し、左右を近くに並べて両方の電源を入れます。</li>
+          <li>左右それぞれのリセットボタンを 1 回押します。</li>
+          <li>ボトムケースを閉じます。</li>
+        </ol>
       </div>
     </div>
+
     <div class="step">
-      <div class="n">2</div>
+      <div class="n">7</div>
       <div>
-        <h3>左右両方にリセット用ファイルを書き込む</h3>
-        <p><a href="#flash">C の手順</a>で、<strong>右手側と左手側の両方</strong>に <code>settings_reset-seeeduino_xiao_ble-zmk.uf2</code> を書き込みます。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="n">3</div>
-      <div>
-        <h3>通常のファイルを書き込み直す</h3>
-        <p>右手側に <code>jitra_R-…</code>、左手側に <code>jitra_L-…</code> を書き込みます。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="n">4</div>
-      <div>
-        <h3>左右を近づけて電源を入れ、接続し直す</h3>
-        <p>左右を並べて両方の電源を入れ、左右がつながるまで 10 秒ほど待ちます。その後、PC の Bluetooth 設定から <code>JITRA</code> を接続します。</p>
+        <h3>PC と接続し直す</h3>
+        <ol>
+          <li>PC の Bluetooth 設定に古い <code>JITRA</code> が残っていれば削除します。</li>
+          <li>一覧に表示される <code>JITRA</code> を選んで接続します。</li>
+          <li><a href="keytest.html">動作チェックページ</a>で、すべてのキー・ダイヤル・トラックボールが反応するか確認します。</li>
+        </ol>
       </div>
     </div>
   </section>
@@ -243,7 +278,11 @@
     </details>
     <details>
       <summary>書き込み後、左手側だけ動かない</summary>
-      <div><p><a href="#reset">接続のリセット</a>を行ってください。</p></div>
+      <div><p>左右とも settings_reset から順に書き込み直し、手順 6 で左右を近くに並べた状態で電源を入れてください。</p></div>
+    </details>
+    <details>
+      <summary>USB でつないでいるのに Bluetooth の機器に入力されない</summary>
+      <div><p>右手側を USB で PC につなぐと、入力は USB 側に送られます。Bluetooth で使うときは USB ケーブルを外してください。</p></div>
     </details>
   </section>
 </main>
@@ -251,6 +290,7 @@
 <footer>
   <a href="index.html">取扱説明書</a>
   <a href="assembly.html">組み立てガイド</a>
+  <a href="keytest.html">動作チェック</a>
   <a href="https://github.com/fuku813-ui/zmk-config-JITRA">GitHub</a>
 </footer>
 
