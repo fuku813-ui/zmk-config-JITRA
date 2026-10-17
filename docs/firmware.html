@@ -26,8 +26,8 @@
     <tbody>
       <tr><td>キーの割り当てを変えたい</td><td><a href="#studio">A. ZMK Studio</a></td><td>不要</td></tr>
       <tr><td>マクロ・ダイヤルの動作・トラックボール速度なども変えたい</td><td><a href="#github">B. GitHub でビルド</a></td><td>必要</td></tr>
-      <tr><td>ファームウェアを書き込みたい</td><td><a href="#flash">C. 書き込み</a></td><td>どちらでも</td></tr>
-      <tr><td>左右がつながらない・接続が不安定</td><td><a href="#reset">C. 書き込み</a>をやり直す</td><td>どちらでも</td></tr>
+      <tr><td>ファームウェアを書き込みたい</td><td><a href="#flash">C. 書き込み</a></td><td>必要</td></tr>
+      <tr><td>左右がつながらない・接続が不安定</td><td><a href="#reset">C. 書き込み</a>をやり直す</td><td>必要</td></tr>
     </tbody>
   </table></div>
 
@@ -131,11 +131,10 @@
             <tr><td><code>config/boards/shields/jitra/jitra_R.conf</code></td><td>トラックボールの速度(<code>CONFIG_PMW3610_CPI</code>)、スクロール量、マウス操作中の自動切り替え時間</td></tr>
           </tbody>
         </table></div>
-        <p>キー配列は <a href="https://nickcoutsos.github.io/keymap-editor/">Keymap Editor</a> を使うと画面上で編集できます。GitHub でログインし、リポジトリの追加画面では <code>Only select repositories</code> を選んで、fork した <code>zmk-config-JITRA</code> だけを許可してください。</p>
       </div>
     </div>
 
-    <div class="step">
+    <div class="step" id="download">
       <div class="n">3</div>
       <div>
         <h3>GitHub Actions でビルドしてダウンロードする</h3>

@@ -64,14 +64,6 @@
           </tbody>
         </table></div>
         <figure data-img="assets/guide/a02-parts.jpg"><figcaption>用意するパーツ一式</figcaption></figure>
-        <div class="note">
-          <strong>キーキャップ選びのヒント</strong>
-          <p>1.25U が 6 個、ISO Enter が 1 個必要です。この組み合わせを 1 セットでそろえられるロープロファイル品は多くありません。<span class="todo">要確認:動作確認済みの具体的な製品名と、足りないサイズの補い方</span></p>
-        </div>
-        <div class="note">
-          <strong>スタビライザーについて</strong>
-          <p>JITRA の基板にはスタビライザーの取り付け穴がありません。2.25U・ISO Enter もスタビライザーなしで使います。キーの端を押したときに少し傾くのは仕様です。</p>
-        </div>
       </div>
     </div>
   </section>
@@ -175,6 +167,14 @@
           <li>デバイスの一覧に表示される <code>JITRA</code> を選んで接続します。</li>
         </ol>
         <p>左手側の入力が反映されないときは、左右両方の電源を入れ直してください。</p>
+        <div class="note warn">
+          <strong>一覧に JITRA が表示されないとき</strong>
+          <p>右手側の電源が ON になっているか(手順 7)を確認してください。それでも表示されない場合は、ファームウェアを書き込み直すと表示されるようになります。</p>
+          <ol>
+            <li><a href="https://github.com/fuku813-ui/zmk-config-JITRA/actions">JITRA の GitHub Actions</a> からファームウェアをダウンロードします(<a href="firmware.html#download">ダウンロードの手順</a>)。GitHub へのログインが必要です。</li>
+            <li><a href="firmware.html#flash">書き込みの手順</a>に沿って、左右に書き込みます。</li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -206,18 +206,292 @@
       <div class="n">11</div>
       <div>
         <h3>複数の機器を切り替える(必要な場合)</h3>
-        <p>JITRA は最大 5 台の機器を登録できます。「かな」キーを押しながら、次のキーで接続先を切り替えます。</p>
-        <div class="tbl"><table>
-          <thead><tr><th>「かな」と一緒に押すキー</th><th>動作</th></tr></thead>
-          <tbody>
-            <tr><td>右手側 ⌘</td><td>接続先 1</td></tr>
-            <tr><td>右手側 ⌥</td><td>接続先 2</td></tr>
-            <tr><td>右手側 Ctrl</td><td>接続先 3</td></tr>
-            <tr><td>左手側 ⌘</td><td>接続先 4</td></tr>
-            <tr><td>左手側 ⌥</td><td>接続先 5</td></tr>
-            <tr><td>Backspace</td><td>いま選んでいる接続先の登録を消す</td></tr>
-          </tbody>
-        </table></div>
+        <p>JITRA は最大 5 台の機器を登録できます。</p>
+        <h4>初期状態のキー配列</h4>
+        <div class="kbdwrap">
+<svg class="kbd" viewBox="0 0 883 276" role="img" aria-label="JITRA の初期状態のキー配列(DEFAULT レイヤー)">
+<text x="166.5" y="15" font-size="13" class="side">左手側</text>
+<text x="666.5" y="15" font-size="13" class="side">右手側</text>
+<rect class="k " x="5.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="29" y="52.0" font-size="14">Esc</text>
+<rect class="k " x="55.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="79" y="53.1" font-size="17">1</text>
+<rect class="k " x="105.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="129" y="53.1" font-size="17">2</text>
+<rect class="k " x="155.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="179" y="53.1" font-size="17">3</text>
+<rect class="k " x="205.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="229" y="53.1" font-size="17">4</text>
+<rect class="k " x="255.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="279" y="53.1" font-size="17">5</text>
+<rect class="k " x="305.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="329" y="53.1" font-size="17">6</text>
+<rect class="k " x="480.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="504" y="53.1" font-size="17">7</text>
+<rect class="k " x="530.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="554" y="53.1" font-size="17">8</text>
+<rect class="k " x="580.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="604" y="53.1" font-size="17">9</text>
+<rect class="k " x="630.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="654" y="53.1" font-size="17">0</text>
+<rect class="k " x="680.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="704" y="53.1" font-size="17">-</text>
+<rect class="k " x="730.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="754" y="53.1" font-size="17">^</text>
+<rect class="k " x="780.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="804" y="53.1" font-size="17">¥</text>
+<rect class="k " x="830.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="854" y="44.0" font-size="14">Back</text>
+<text x="854" y="60.1" font-size="14">space</text>
+<rect class="k " x="5.5" y="73.5" width="72" height="47" rx="6"/>
+<text x="41.5" y="102.0" font-size="14">Tab</text>
+<rect class="k " x="80.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="104" y="103.1" font-size="17">Q</text>
+<rect class="k " x="130.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="154" y="103.1" font-size="17">W</text>
+<rect class="k " x="180.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="204" y="103.1" font-size="17">E</text>
+<rect class="k " x="230.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="254" y="103.1" font-size="17">R</text>
+<rect class="k " x="280.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="304" y="103.1" font-size="17">T</text>
+<rect class="k " x="455.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="479" y="103.1" font-size="17">Y</text>
+<rect class="k " x="505.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="529" y="103.1" font-size="17">U</text>
+<rect class="k " x="555.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="579" y="103.1" font-size="17">I</text>
+<rect class="k " x="605.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="629" y="103.1" font-size="17">O</text>
+<rect class="k " x="655.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="679" y="103.1" font-size="17">P</text>
+<rect class="k " x="705.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="729" y="103.1" font-size="17">@</text>
+<rect class="k " x="755.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="779" y="103.1" font-size="17">[</text>
+<rect class="k " x="818" y="73.5" width="59.5" height="97" rx="6"/>
+<text x="847.75" y="127.0" font-size="14">Enter</text>
+<rect class="k " x="5.5" y="123.5" width="84.5" height="47" rx="6"/>
+<text x="47.75" y="152.0" font-size="14">Caps</text>
+<rect class="k " x="93" y="123.5" width="47" height="47" rx="6"/>
+<text x="116.5" y="153.1" font-size="17">A</text>
+<rect class="k " x="143" y="123.5" width="47" height="47" rx="6"/>
+<text x="166.5" y="153.1" font-size="17">S</text>
+<rect class="k " x="193" y="123.5" width="47" height="47" rx="6"/>
+<text x="216.5" y="153.1" font-size="17">D</text>
+<rect class="k " x="243" y="123.5" width="47" height="47" rx="6"/>
+<text x="266.5" y="153.1" font-size="17">F</text>
+<rect class="k " x="293" y="123.5" width="47" height="47" rx="6"/>
+<text x="316.5" y="153.1" font-size="17">G</text>
+<rect class="k " x="468" y="123.5" width="47" height="47" rx="6"/>
+<text x="491.5" y="153.1" font-size="17">H</text>
+<rect class="k " x="518" y="123.5" width="47" height="47" rx="6"/>
+<text x="541.5" y="153.1" font-size="17">J</text>
+<rect class="k " x="568" y="123.5" width="47" height="47" rx="6"/>
+<text x="591.5" y="153.1" font-size="17">K</text>
+<rect class="k " x="618" y="123.5" width="47" height="47" rx="6"/>
+<text x="641.5" y="153.1" font-size="17">L</text>
+<rect class="k " x="668" y="123.5" width="47" height="47" rx="6"/>
+<text x="691.5" y="153.1" font-size="17">;</text>
+<rect class="k " x="718" y="123.5" width="47" height="47" rx="6"/>
+<text x="741.5" y="153.1" font-size="17">:</text>
+<rect class="k " x="768" y="123.5" width="47" height="47" rx="6"/>
+<text x="791.5" y="152.0" font-size="14">Del</text>
+<rect class="k " x="5.5" y="173.5" width="109.5" height="47" rx="6"/>
+<text x="60.25" y="202.0" font-size="14">Shift</text>
+<rect class="k " x="118" y="173.5" width="47" height="47" rx="6"/>
+<text x="141.5" y="203.1" font-size="17">Z</text>
+<rect class="k " x="168" y="173.5" width="47" height="47" rx="6"/>
+<text x="191.5" y="203.1" font-size="17">X</text>
+<rect class="k " x="218" y="173.5" width="47" height="47" rx="6"/>
+<text x="241.5" y="203.1" font-size="17">C</text>
+<rect class="k " x="268" y="173.5" width="47" height="47" rx="6"/>
+<text x="291.5" y="203.1" font-size="17">V</text>
+<rect class="k " x="318" y="173.5" width="47" height="47" rx="6"/>
+<text x="341.5" y="203.1" font-size="17">B</text>
+<rect class="k " x="493" y="173.5" width="47" height="47" rx="6"/>
+<text x="516.5" y="203.1" font-size="17">N</text>
+<rect class="k " x="543" y="173.5" width="47" height="47" rx="6"/>
+<text x="566.5" y="203.1" font-size="17">M</text>
+<rect class="k " x="593" y="173.5" width="47" height="47" rx="6"/>
+<text x="616.5" y="203.1" font-size="17">,</text>
+<rect class="k " x="643" y="173.5" width="47" height="47" rx="6"/>
+<text x="666.5" y="203.1" font-size="17">.</text>
+<rect class="k " x="693" y="173.5" width="47" height="47" rx="6"/>
+<text x="716.5" y="203.1" font-size="17">/</text>
+<rect class="k " x="743" y="173.5" width="47" height="47" rx="6"/>
+<text x="766.5" y="203.1" font-size="17">ろ</text>
+<rect class="k " x="793" y="173.5" width="84.5" height="47" rx="6"/>
+<text x="835.25" y="202.0" font-size="14">Shift</text>
+<rect class="k " x="5.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="35.25" y="252.0" font-size="14">Ctrl</text>
+<rect class="k " x="68" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="97.75" y="253.1" font-size="17">⌘</text>
+<rect class="k " x="130.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="160.25" y="253.1" font-size="17">⌥</text>
+<rect class="k lt" x="193" y="223.5" width="47" height="47" rx="6"/>
+<text x="216.5" y="253.1" font-size="17">英数</text>
+<rect class="k " x="293" y="223.5" width="47" height="47" rx="6"/>
+<text x="316.5" y="252.0" font-size="14">Space</text>
+<rect class="k lt" x="468" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="497.75" y="253.1" font-size="17">かな</text>
+<rect class="k " x="705.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="735.25" y="253.1" font-size="17">⌘</text>
+<rect class="k " x="768" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="797.75" y="253.1" font-size="17">⌥</text>
+<rect class="k " x="830.5" y="223.5" width="47" height="47" rx="6"/>
+<text x="854" y="252.0" font-size="14">Ctrl</text>
+</svg>
+        </div>
+        <div class="legend"><span><i style="background:var(--accent-soft)"></i>長押しで機能が切り替わるキー(英数・かな)</span></div>
+        <h4>接続先の切り替え</h4>
+        <p>「かな」キーを押したまま、番号のキーを押すと、その接続先に切り替わります。</p>
+        <div class="kbdwrap">
+<svg class="kbd" viewBox="0 0 883 276" role="img" aria-label="「かな」を押したまま、右手側の ⌘ で接続先 1、右手側の ⌥ で 2、右手側の Ctrl で 3、左手側の ⌘ で 4、左手側の ⌥ で 5、Backspace でいまの接続先の登録を消去">
+<text x="166.5" y="15" font-size="13" class="side">左手側</text>
+<text x="666.5" y="15" font-size="13" class="side">右手側</text>
+<rect class="k dim" x="5.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="29" y="52.0" font-size="14" class="dim">Esc</text>
+<rect class="k dim" x="55.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="79" y="53.1" font-size="17" class="dim">1</text>
+<rect class="k dim" x="105.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="129" y="53.1" font-size="17" class="dim">2</text>
+<rect class="k dim" x="155.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="179" y="53.1" font-size="17" class="dim">3</text>
+<rect class="k dim" x="205.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="229" y="53.1" font-size="17" class="dim">4</text>
+<rect class="k dim" x="255.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="279" y="53.1" font-size="17" class="dim">5</text>
+<rect class="k dim" x="305.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="329" y="53.1" font-size="17" class="dim">6</text>
+<rect class="k dim" x="480.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="504" y="53.1" font-size="17" class="dim">7</text>
+<rect class="k dim" x="530.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="554" y="53.1" font-size="17" class="dim">8</text>
+<rect class="k dim" x="580.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="604" y="53.1" font-size="17" class="dim">9</text>
+<rect class="k dim" x="630.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="654" y="53.1" font-size="17" class="dim">0</text>
+<rect class="k dim" x="680.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="704" y="53.1" font-size="17" class="dim">-</text>
+<rect class="k dim" x="730.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="754" y="53.1" font-size="17" class="dim">^</text>
+<rect class="k dim" x="780.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="804" y="53.1" font-size="17" class="dim">¥</text>
+<rect class="k hit" x="830.5" y="23.5" width="47" height="47" rx="6"/>
+<text x="854" y="40.9" font-size="8" class="sub">Backspace</text>
+<text x="854" y="60.5" font-size="18" class="b">消去</text>
+<rect class="k dim" x="5.5" y="73.5" width="72" height="47" rx="6"/>
+<text x="41.5" y="102.0" font-size="14" class="dim">Tab</text>
+<rect class="k dim" x="80.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="104" y="103.1" font-size="17" class="dim">Q</text>
+<rect class="k dim" x="130.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="154" y="103.1" font-size="17" class="dim">W</text>
+<rect class="k dim" x="180.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="204" y="103.1" font-size="17" class="dim">E</text>
+<rect class="k dim" x="230.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="254" y="103.1" font-size="17" class="dim">R</text>
+<rect class="k dim" x="280.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="304" y="103.1" font-size="17" class="dim">T</text>
+<rect class="k dim" x="455.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="479" y="103.1" font-size="17" class="dim">Y</text>
+<rect class="k dim" x="505.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="529" y="103.1" font-size="17" class="dim">U</text>
+<rect class="k dim" x="555.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="579" y="103.1" font-size="17" class="dim">I</text>
+<rect class="k dim" x="605.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="629" y="103.1" font-size="17" class="dim">O</text>
+<rect class="k dim" x="655.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="679" y="103.1" font-size="17" class="dim">P</text>
+<rect class="k dim" x="705.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="729" y="103.1" font-size="17" class="dim">@</text>
+<rect class="k dim" x="755.5" y="73.5" width="47" height="47" rx="6"/>
+<text x="779" y="103.1" font-size="17" class="dim">[</text>
+<rect class="k dim" x="818" y="73.5" width="59.5" height="97" rx="6"/>
+<text x="847.75" y="127.0" font-size="14" class="dim">Enter</text>
+<rect class="k dim" x="5.5" y="123.5" width="84.5" height="47" rx="6"/>
+<text x="47.75" y="152.0" font-size="14" class="dim">Caps</text>
+<rect class="k dim" x="93" y="123.5" width="47" height="47" rx="6"/>
+<text x="116.5" y="153.1" font-size="17" class="dim">A</text>
+<rect class="k dim" x="143" y="123.5" width="47" height="47" rx="6"/>
+<text x="166.5" y="153.1" font-size="17" class="dim">S</text>
+<rect class="k dim" x="193" y="123.5" width="47" height="47" rx="6"/>
+<text x="216.5" y="153.1" font-size="17" class="dim">D</text>
+<rect class="k dim" x="243" y="123.5" width="47" height="47" rx="6"/>
+<text x="266.5" y="153.1" font-size="17" class="dim">F</text>
+<rect class="k dim" x="293" y="123.5" width="47" height="47" rx="6"/>
+<text x="316.5" y="153.1" font-size="17" class="dim">G</text>
+<rect class="k dim" x="468" y="123.5" width="47" height="47" rx="6"/>
+<text x="491.5" y="153.1" font-size="17" class="dim">H</text>
+<rect class="k dim" x="518" y="123.5" width="47" height="47" rx="6"/>
+<text x="541.5" y="153.1" font-size="17" class="dim">J</text>
+<rect class="k dim" x="568" y="123.5" width="47" height="47" rx="6"/>
+<text x="591.5" y="153.1" font-size="17" class="dim">K</text>
+<rect class="k dim" x="618" y="123.5" width="47" height="47" rx="6"/>
+<text x="641.5" y="153.1" font-size="17" class="dim">L</text>
+<rect class="k dim" x="668" y="123.5" width="47" height="47" rx="6"/>
+<text x="691.5" y="153.1" font-size="17" class="dim">;</text>
+<rect class="k dim" x="718" y="123.5" width="47" height="47" rx="6"/>
+<text x="741.5" y="153.1" font-size="17" class="dim">:</text>
+<rect class="k dim" x="768" y="123.5" width="47" height="47" rx="6"/>
+<text x="791.5" y="152.0" font-size="14" class="dim">Del</text>
+<rect class="k dim" x="5.5" y="173.5" width="109.5" height="47" rx="6"/>
+<text x="60.25" y="202.0" font-size="14" class="dim">Shift</text>
+<rect class="k dim" x="118" y="173.5" width="47" height="47" rx="6"/>
+<text x="141.5" y="203.1" font-size="17" class="dim">Z</text>
+<rect class="k dim" x="168" y="173.5" width="47" height="47" rx="6"/>
+<text x="191.5" y="203.1" font-size="17" class="dim">X</text>
+<rect class="k dim" x="218" y="173.5" width="47" height="47" rx="6"/>
+<text x="241.5" y="203.1" font-size="17" class="dim">C</text>
+<rect class="k dim" x="268" y="173.5" width="47" height="47" rx="6"/>
+<text x="291.5" y="203.1" font-size="17" class="dim">V</text>
+<rect class="k dim" x="318" y="173.5" width="47" height="47" rx="6"/>
+<text x="341.5" y="203.1" font-size="17" class="dim">B</text>
+<rect class="k dim" x="493" y="173.5" width="47" height="47" rx="6"/>
+<text x="516.5" y="203.1" font-size="17" class="dim">N</text>
+<rect class="k dim" x="543" y="173.5" width="47" height="47" rx="6"/>
+<text x="566.5" y="203.1" font-size="17" class="dim">M</text>
+<rect class="k dim" x="593" y="173.5" width="47" height="47" rx="6"/>
+<text x="616.5" y="203.1" font-size="17" class="dim">,</text>
+<rect class="k dim" x="643" y="173.5" width="47" height="47" rx="6"/>
+<text x="666.5" y="203.1" font-size="17" class="dim">.</text>
+<rect class="k dim" x="693" y="173.5" width="47" height="47" rx="6"/>
+<text x="716.5" y="203.1" font-size="17" class="dim">/</text>
+<rect class="k dim" x="743" y="173.5" width="47" height="47" rx="6"/>
+<text x="766.5" y="203.1" font-size="17" class="dim">ろ</text>
+<rect class="k dim" x="793" y="173.5" width="84.5" height="47" rx="6"/>
+<text x="835.25" y="202.0" font-size="14" class="dim">Shift</text>
+<rect class="k dim" x="5.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="35.25" y="252.0" font-size="14" class="dim">Ctrl</text>
+<rect class="k hit" x="68" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="97.75" y="242.0" font-size="11" class="sub">⌘</text>
+<text x="97.75" y="260.5" font-size="18" class="b">4</text>
+<rect class="k hit" x="130.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="160.25" y="242.0" font-size="11" class="sub">⌥</text>
+<text x="160.25" y="260.5" font-size="18" class="b">5</text>
+<rect class="k dim" x="193" y="223.5" width="47" height="47" rx="6"/>
+<text x="216.5" y="253.1" font-size="17" class="dim">英数</text>
+<rect class="k dim" x="293" y="223.5" width="47" height="47" rx="6"/>
+<text x="316.5" y="252.0" font-size="14" class="dim">Space</text>
+<rect class="k hold" x="468" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="497.75" y="242.0" font-size="11" class="inv">押したまま</text>
+<text x="497.75" y="260.5" font-size="18" class="inv b">かな</text>
+<rect class="k hit" x="705.5" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="735.25" y="242.0" font-size="11" class="sub">⌘</text>
+<text x="735.25" y="260.5" font-size="18" class="b">1</text>
+<rect class="k hit" x="768" y="223.5" width="59.5" height="47" rx="6"/>
+<text x="797.75" y="242.0" font-size="11" class="sub">⌥</text>
+<text x="797.75" y="260.5" font-size="18" class="b">2</text>
+<rect class="k hit" x="830.5" y="223.5" width="47" height="47" rx="6"/>
+<text x="854" y="242.0" font-size="11" class="sub">Ctrl</text>
+<text x="854" y="260.5" font-size="18" class="b">3</text>
+</svg>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--accent)"></i>押したままにする</span>
+          <span><i style="background:var(--accent-soft);border-color:var(--accent)"></i>一緒に押すキー(数字は接続先)</span>
+        </div>
+        <p>「消去」(Backspace の位置)を押すと、いま選んでいる接続先の登録を消します。</p>
         <p>新しい機器を登録するときは、空いている接続先に切り替えてから、その機器の Bluetooth 設定で <code>JITRA</code> を選びます。</p>
       </div>
     </div>

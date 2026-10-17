@@ -124,3 +124,13 @@ footer { max-width: 720px; margin: 40px auto 0; padding: 20px 16px 0; border-top
 footer a { color: var(--muted); }
 .done .eyebrow { font-size: 12px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin: 0; }
 figure.fit img { width: auto; max-width: 100%; }
+.step h4 { margin: 18px 0 6px; font-size: 15px; }
+svg.kbd .k { fill: var(--k1); }
+svg.kbd .k.lt, svg.kbd .k.hit { fill: var(--accent-soft); }
+svg.kbd .k.hit { stroke: var(--accent); stroke-width: 2; }
+svg.kbd .k.hold { fill: var(--accent); stroke: var(--accent); }
+svg.kbd .k.dim { fill: var(--bg); stroke: var(--line); }
+svg.kbd text.dim, svg.kbd text.sub, svg.kbd text.side { fill: var(--muted); }
+svg.kbd text.inv { fill: var(--card); }
+svg.kbd text.b { font-weight: 700; }
+.legend { margin-bottom: 12px; }

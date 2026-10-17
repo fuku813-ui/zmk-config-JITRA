@@ -34,6 +34,11 @@
     line-height: 1.75;
     padding-bottom: 60px;
   }
+  .topbar { border-bottom: 1px solid var(--line); background: var(--card); }
+  .topbar .in { max-width: 640px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; font-size: 14px; }
+  .topbar .brand { font-weight: 700; letter-spacing: 0.2em; margin-right: auto; color: var(--text); text-decoration: none; }
+  .topbar a { color: var(--muted); text-decoration: none; }
+  .topbar a[aria-current="page"] { color: var(--accent); font-weight: 600; }
   header {
     padding: 36px 20px 28px;
     text-align: center;
@@ -201,6 +206,13 @@
 </style>
 </head>
 <body>
+
+<div class="topbar"><div class="in">
+  <a class="brand" href="index.html">JITRA</a>
+  <a href="assembly.html">組み立て</a>
+  <a href="firmware.html">キー配列・ファームウェア</a>
+  <a href="index.html" aria-current="page">取扱説明書</a>
+</div></div>
 
 <header>
   <div class="logo">JITRA</div>
