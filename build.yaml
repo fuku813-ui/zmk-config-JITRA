@@ -22,6 +22,11 @@ include:
    shield: jitra_R
    snippet: studio-rpc-usb-uart
  - board: seeeduino_xiao_ble
+   shield: jitra_R
+   snippet: studio-rpc-usb-uart
+   cmake-args: -DCONFIG_BT_CTLR_PHY_2M=n
+   artifact-name: jitra_R_ble_compat
+ - board: seeeduino_xiao_ble
    shield: jitra_L
  - board: seeeduino_xiao_ble
    shield: settings_reset
