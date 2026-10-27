@@ -3,6 +3,11 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+// msc(マウスホイール)の既定スクロール量(10)は小さすぎるため引き上げ (moNa2-v2 と同じ100)
+// pointing.h で定義済みなので警告回避のため一旦 undef
+#undef ZMK_POINTING_DEFAULT_SCRL_VAL
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
+
 &mt {
     flavor = "balanced";
     quick-tap-ms = <0>;
@@ -19,33 +24,15 @@
 };
 
 / {
-    macros {
-        // 矢印キーを連打してスクロール量を PG_UP/PG_DN の約25%程度に抑える
-        // (&msc によるマウスホイール送信は、離す(release)イベントが
-        //  内部キューから取りこぼされると"押しっぱなし"のまま戻らず
-        //  スクロールが止まらなくなる問題が確認されたため、この方式に戻した)
-        scroll_up_qtr: scroll_up_qtr {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <10>;
-            bindings = <&kp UP>, <&kp UP>, <&kp UP>, <&kp UP>, <&kp UP>;
-        };
-
-        scroll_down_qtr: scroll_down_qtr {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <10>;
-            bindings = <&kp DOWN>, <&kp DOWN>, <&kp DOWN>, <&kp DOWN>, <&kp DOWN>;
-        };
-    };
-
     behaviors {
+        // moNa2-v2 と同じく、矢印キー連打ではなくマウスホイール(msc)を送る
+        // (以前スクロールが止まらなかったのは steps/triggers-per-rotation の誤りで
+        //  1クリックあたり約3.3回トリガーされ処理が溜まっていたため。jitra.dtsi で修正済み)
         scroll_encoder: scroll_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&scroll_up_qtr>, <&scroll_down_qtr>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <20>;
         };
     };
 
